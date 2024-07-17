@@ -1,7 +1,7 @@
 import AWS from 'aws-sdk';
 AWS.config.update({
-    accessKeyId: "REPLACE_ACCESS_KEY",
-    secretAccessKey: "REPLACE_SECRET_KEY",
+    accessKeyId: dotenv.S3_SECRET_ID,
+    secretAccessKey: dotenv.S3_SECRET_KEY,
 });
 
 export const loadResource = async (res, key) => {
@@ -14,7 +14,7 @@ export const loadResource = async (res, key) => {
         
         let resourceExt = key.split('.')[ key.split('.').length - 1 ];
     
-        let fileTypes = ['jpg', 'jpeg', 'png', 'svg', 'mp4', 'avi', 'gif']; // REPLACE SET FILE TYPES
+        let fileTypes = ['jpg', 'jpeg', 'png'];
         
         
         if (!fileTypes.includes(resourceExt)) {
