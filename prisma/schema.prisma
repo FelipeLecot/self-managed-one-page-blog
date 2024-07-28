@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Image {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  dateCreated DateTime @default(now())
+  dateUpdated DateTime @updatedAt
+
+  Gallery Gallery[]
+}
+
+model File {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  dateCreated DateTime @default(now())
+  dateUpdated DateTime @updatedAt
+}
+
+model Block {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  heading     String
+  content     String   @db.LongText
+  order       Int     @default(0)
+  color       String @default("#1b1e21")
+  gallery     Gallery[]
+
+  Navigation Navigation[]
+}
+
+model Gallery {
+  id      Int    @id @default(autoincrement())
+  image   Image  @relation(fields: [imageId], references: [id])
+  imageId Int
+  block   Block  @relation(fields: [blockId], references: [id])
+  order       Int     @default(0)
+  blockId Int
+}
+
+model Navigation {
+  id      Int     @id @default(autoincrement())
+  url     String?  @unique
+  name    String
+  order       Int     @default(0)
+  blockId Int?
+  block   Block?  @relation(fields: [blockId], references: [id])
+  dateCreated DateTime @default(now())
+  dateUpdated DateTime @updatedAt
+}
