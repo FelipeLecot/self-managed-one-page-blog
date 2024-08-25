@@ -10,7 +10,7 @@ document.querySelector('.overlay-backdrop').addEventListener('click', () => {
 
 const createFileForm = () => {
     document.querySelector('.create-form').innerHTML = `
-        <form id="create-form" hx-encoding="multipart/form-data" hx-post="/wp/api/file" hx-trigger="submit" hx-target=".files" hx-swap="beforeend" hx-on:after-swap="removeOverlay">
+        <form id="create-form" hx-encoding="multipart/form-data" hx-post="/wp/api/file" hx-trigger="submit" hx-target=".files" hx-swap="beforeend" hx-on::after-request="hideOverlays()">
             <label for="name">Nombre:</label>
             <input type="text" name="name" id="name" required>
             <label for="description">Descripcion:</label>
@@ -29,7 +29,7 @@ const createFileForm = () => {
 
 const updateFileForm = (id, name, description) => {
     document.querySelector('.update-form').innerHTML = `
-        <form id="update-form" hx-trigger="submit" hx-put="/wp/api/file" hx-target=".content" hx-swap="innerHTML" hx-on:after-swap="removeOverlay">
+        <form id="update-form" hx-trigger="submit" hx-put="/wp/api/file" hx-target=".content" hx-swap="innerHTML" hx-on::after-request="hideOverlays()">
             <input type="hidden" name="id" value="${id}" required>
             <label for="name">Nombre:</label>
             <input type="text" name="name" id="name" value="${name}" required>
@@ -65,7 +65,7 @@ const deleteFileForm = (id) => {
 
 const createImageForm = () => {
     document.querySelector('.create-form').innerHTML = `
-        <form id="create-form" hx-post="/wp/api/image" hx-encoding="multipart/form-data" hx-trigger="submit" hx-target=".images" hx-swap="beforeend" hx-on:after-swap="removeOverlay">
+        <form id="create-form" hx-post="/wp/api/image" hx-encoding="multipart/form-data" hx-trigger="submit" hx-target=".images" hx-swap="beforeend" hx-on::after-request="hideOverlays()">
             <label for="name">Nombre:</label>
             <input type="text" name="name" id="name" required>
             <label for="description">Descripcion:</label>
@@ -84,7 +84,7 @@ const createImageForm = () => {
 
 const updateImageForm = (id, name, description) => {
     document.querySelector('.update-form').innerHTML = `
-        <form id="update-form" hx-trigger="submit" hx-put="/wp/api/image" hx-target=".content" hx-swap="innerHTML" hx-on:after-swap="removeOverlay">
+        <form id="update-form" hx-trigger="submit" hx-put="/wp/api/image" hx-target=".content" hx-swap="innerHTML" hx-on::after-request="hideOverlays()">
             <input type="hidden" name="id" value="${id}" required>
             <label for="name">Nombre:</label>
             <input type="text" name="name" id="name" value="${name}" required>
@@ -102,7 +102,7 @@ const updateImageForm = (id, name, description) => {
 
 const deleteImageForm = (id) => {
     document.querySelector('.delete-form').innerHTML = `
-        <form id="delete-form" hx-delete="/wp/api/image" hx-trigger="submit" hx-target=".content" hx-swap="innerHTML" hx-on:after-swap="removeOverlay">
+        <form id="delete-form" hx-delete="/wp/api/image" hx-trigger="submit" hx-target=".content" hx-swap="innerHTML" hx-on::after-request="hideOverlays()">
             <p>¿Estas seguro que queres eliminar este archivo?</p>
             <input type="hidden" name="id" value="${id}" required>
             <button class="delete-confirm" id="submit">Eliminar</button>
@@ -120,7 +120,8 @@ const deleteImageForm = (id) => {
 
 const createNavigationForm = () => {
     document.querySelector('.create-form').innerHTML = `
-        <form id="create-form" hx-post="/wp/api/navigation" hx-trigger="submit" hx-target=".navigation" hx-swap="beforeend" hx-on:after-swap="removeOverlay">
+        <span hx-target="#block-select" hx-get="/wp/api/block" hx-swap="beforeend" hx-trigger="load"></span>
+        <form id="create-form" hx-post="/wp/api/navigation" hx-trigger="submit" hx-target=".navigation" hx-swap="beforeend" hx-on::after-request="hideOverlays()">
             <label for="name">Nombre:</label>
             <input type="text" name="name" id="name" required>
             <label for="url">URL:</label>
@@ -128,7 +129,7 @@ const createNavigationForm = () => {
             <label for="order">Orden:</label>
             <input type="number" name="order" id="order" required>
             <label for="block-select">Bloque:</label>
-            <select name="block" id="block-select" hx-target="#block-select" hx-get="/wp/api/block?id=${blockId}" hx-swap="beforeend" hx-trigger="load">
+            <select name="block" id="block-select">
                 <option>Ninguno</option>
             </select>
             <button id="submit">Crear</button>
@@ -143,7 +144,8 @@ const createNavigationForm = () => {
 
 const updateNavigationForm = (id, name, url, order, blockId) => {
     document.querySelector('.update-form').innerHTML = `
-        <form id="update-form" hx-trigger="submit" hx-put="/wp/api/navigation" hx-target=".content" hx-swap="innerHTML" hx-on:after-swap="removeOverlay">
+        <span hx-target="#block-select" hx-get="/wp/api/block?id=${blockId}" hx-swap="beforeend" hx-trigger="load"></span>
+        <form id="update-form" hx-trigger="submit" hx-put="/wp/api/navigation" hx-target=".content" hx-swap="innerHTML" hx-on::after-request="hideOverlays()">
             <input type="hidden" name="id" value="${id}" required>
             <label for="name">Nombre:</label>
             <input type="text" name="name" id="name" value="${name}" required>
@@ -152,7 +154,7 @@ const updateNavigationForm = (id, name, url, order, blockId) => {
             <label for="url">Orden:</label>
             <input type="number" name="order" id="number" value="${order}" required>
             <label for="block-select">Bloque:</label>
-            <select name="block" id="block-select" hx-target="#block-select" hx-get="/wp/api/block?id=${blockId}" hx-swap="beforeend" hx-trigger="load">
+            <select name="block" id="block-select">
                 <option>Ninguno</option>
             </select>
             <button id="submit">Actualizar</button>
@@ -167,7 +169,7 @@ const updateNavigationForm = (id, name, url, order, blockId) => {
 
 const deleteNavigationForm = (id) => {
     document.querySelector('.delete-form').innerHTML = `
-        <form id="delete-form" hx-delete="/wp/api/navigation" hx-trigger="submit" hx-target=".content" hx-swap="innerHTML" hx-on:after-swap="removeOverlay">
+        <form id="delete-form" hx-delete="/wp/api/navigation" hx-trigger="submit" hx-target=".content" hx-swap="innerHTML" hx-on::after-request="hideOverlays()">
             <p>¿Estas seguro que queres eliminar este enlace?</p>
             <input type="hidden" name="id" value="${id}" required>
             <button class="delete-confirm" id="submit">Eliminar</button>
@@ -185,7 +187,8 @@ const deleteNavigationForm = (id) => {
 
 const createBlockForm = () => {
     document.querySelector('.create-form').innerHTML = `
-        <form id="create-form" hx-post="/wp/api/block" hx-trigger="submit" hx-target=".blocks" hx-swap="beforeend" hx-on:after-swap="removeOverlay">
+        <span hx-get="/wp/api/image" hx-target=".gallery-option-cont" hx-swap="innerHTML" hx-trigger="load"></span>
+        <form id="create-form" hx-post="/wp/api/block" hx-trigger="submit" hx-target=".blocks" hx-swap="beforeend" hx-on::after-request="hideOverlays()">
             <label for="slug">Nombre:</label>
             <input type="text" name="slug" id="slug" required>
             <label for="heading">Titulo:</label>
@@ -201,7 +204,7 @@ const createBlockForm = () => {
                 <option value="white">Blanco</option>
             </select>
             <label for="gallery">Galeria:</label>
-            <div id="gallery" hx-get="/wp/api/image" hx-target=".gallery-option-cont" hx-swap="innerHTML" hx-trigger="load">
+            <div id="gallery">
                 <div class="gallery-option-cont">    
                     <p>Cargando...</p>
                 </div>
@@ -220,7 +223,8 @@ const createBlockForm = () => {
 
 const updateBlockForm = (id, slug, heading, content, order, color) => {
     document.querySelector('.update-form').innerHTML = `
-        <form id="update-form" hx-trigger="submit" hx-put="/wp/api/block" hx-target=".content" hx-swap="innerHTML" hx-on:after-swap="removeOverlay">
+        <span hx-get="/wp/api/image?blockId=${id}" hx-target=".gallery-option-cont" hx-swap="innerHTML" hx-trigger="load"></span>
+        <form id="update-form" hx-trigger="submit" hx-put="/wp/api/block" hx-target=".content" hx-swap="innerHTML" hx-on::after-request="hideOverlays()">
             <input type="hidden" name="id" value="${id}" required>
             <label for="slug">Nombre:</label>
             <input type="text" name="slug" id="slug" value="${slug}" required>
@@ -237,7 +241,7 @@ const updateBlockForm = (id, slug, heading, content, order, color) => {
                 <option value="white" ${color === 'white' ? 'selected' : ''}>Blanco</option>
             </select>
             <label for="gallery">Galeria:</label>
-            <div id="gallery" hx-get="/wp/api/image?blockId=${id}" hx-target=".gallery-option-cont" hx-swap="innerHTML" hx-trigger="load">
+            <div id="gallery">
                 <div class="gallery-option-cont">    
                     <p>Cargando...</p>
                 </div>
@@ -256,7 +260,7 @@ const updateBlockForm = (id, slug, heading, content, order, color) => {
 
 const deleteBlockForm = (id) => {
     document.querySelector('.delete-form').innerHTML = `
-        <form id="delete-form" hx-delete="/wp/api/block" hx-trigger="submit" hx-target=".content" hx-swap="innerHTML" hx-on:after-swap="removeOverlay">
+        <form id="delete-form" hx-delete="/wp/api/block" hx-trigger="submit" hx-target=".content" hx-swap="innerHTML" hx-on::after-request="hideOverlays()">
             <p>¿Estas seguro que queres eliminar este bloque?</p>
             <input type="hidden" name="id" value="${id}" required>
             <button class="delete-confirm" id="submit">Eliminar</button>
