@@ -123,7 +123,7 @@ nav a {
 
 .content > ul {
     margin-top: 1rem;
-    height: calc(100% - 1.3rem);
+    height: calc(100% - 3.3rem);
 }
 
 .content > ul > li {
