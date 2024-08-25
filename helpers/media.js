@@ -7,7 +7,13 @@ export const loadResource = async (res, key) => {
 
     if (allowedExt.includes(ext)) {
         const path = `assets/${key}`;
-        const file = fs.createReadStream(path, { highWaterMark: 1024 });
-        file.pipe(res);
+        const fileExists = fs.existsSync(path);
+        if (!fileExists) {
+            res.status(404).send("Not Found");
+        }
+        else {
+            const file = fs.createReadStream(path, { highWaterMark: 1024 });
+            file.pipe(res);
+        }
     }
 }
