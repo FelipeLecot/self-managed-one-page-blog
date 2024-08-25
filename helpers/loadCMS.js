@@ -37,14 +37,14 @@ export const loadCMS = async (page) => {
 
                 <meta property="og:title" content="Alejandro Lecot">
                 <meta property="og:description" content="Blog personal de Alejandro Lecot">
-                <meta property="og:image" content="https://alejandrolecot.com/assets/header.png">
+                <meta property="og:image" content="https://alejandrolecot.com/assets/header.jpg">
                 <meta property="og:url" content="https://alejandrolecot.com">
                 <meta property="og:type" content="website">
 
                 <meta name="twitter:card" content="summary_large_image">
                 <meta name="twitter:title" content="Alejandro Lecot">
                 <meta name="twitter:description" content="Blog personal de Alejandro Lecot">
-                <meta name="twitter:image" content="https://alejandrolecot.com/assets/header.png">
+                <meta name="twitter:image" content="https://alejandrolecot.com/assets/header.jpg">
                 <meta name="twitter:url" content="https://alejandrolecot.com">
 
                 <link rel="stylesheet" href="/assets/cms/styles.css">

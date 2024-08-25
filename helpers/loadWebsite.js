@@ -18,14 +18,14 @@ const loadWebsite = async () => {
 
                 <meta property="og:title" content="Alejandro Lecot">
                 <meta property="og:description" content="Blog personal de Alejandro Lecot">
-                <meta property="og:image" content="https://alejandrolecot.com/assets/header.png">
+                <meta property="og:image" content="https://alejandrolecot.com/assets/header.jpg">
                 <meta property="og:url" content="https://alejandrolecot.com">
                 <meta property="og:type" content="website">
 
                 <meta name="twitter:card" content="summary_large_image">
                 <meta name="twitter:title" content="Alejandro Lecot">
                 <meta name="twitter:description" content="Blog personal de Alejandro Lecot">
-                <meta name="twitter:image" content="https://alejandrolecot.com/assets/header.png">
+                <meta name="twitter:image" content="https://alejandrolecot.com/assets/header.jpg">
                 <meta name="twitter:url" content="https://alejandrolecot.com">
 
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
