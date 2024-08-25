@@ -4,7 +4,7 @@ import prisma from "../prisma.js";
 const createBlockListItem = (block) => {
     return `<li>
             <a href="/#${block.slug}" target="_blank">${block.heading} (${block.slug})</a>
-            <p>${block.color}</p>
+            <p>${block.color == "white" ? "Blanco" : block.color == "cyan" ? "Celeste" : "Gris"}</p>
             <p>${block.gallery ? block.gallery.length : 0} imagenes en galeria.</p>
             <div class="controls">
                 <button class="remove" onclick="deleteBlockForm('${block.id}')">Eliminar</button>
@@ -14,7 +14,7 @@ const createBlockListItem = (block) => {
 }
 
 const createBlockList = async (blocks) => {
-    let blockListEl = `<button class="create" onclick="createBlockForm()">Crear Bloque</button><ul class="blocks"><li><p>Encabezado</p><p>Orden</p><p>Color</p><p>Acciones</p></li>`;
+    let blockListEl = `<button class="create" onclick="createBlockForm()">Crear Bloque</button><ul class="blocks"><li><p>Encabezado</p><p>Color</p><p>Imagenes</p><p>Acciones</p></li>`;
     blocks.forEach(block => {
         blockListEl += createBlockListItem(block);
     });
@@ -39,8 +39,8 @@ export const get = async () => {
 }
 
 export const create = async (data) => {
-    const { slug, heading, content, order, color, gallery } = data;
     try {
+        const { slug, heading, content, order, color, gallery } = data;
         if (slug, order, color) {
             const checkIfBlockExists = await prisma.block.findMany({
                 where: {
@@ -60,15 +60,18 @@ export const create = async (data) => {
                     color
                 }
             });
-            
-            for (let i = 0; i < gallery.length; i++) {
-                const galleryRelation = await prisma.gallery.create({
-                    data: {
-                        blockId: blockEntry.id,
-                        images: gallery[i]
-                    }
-                })
+
+            if (gallery && gallery.length > 0) {
+                for (let i = 0; i < gallery.length; i++) {
+                    const galleryRelation = await prisma.gallery.create({
+                        data: {
+                            blockId: blockEntry.id,
+                            images: gallery[i]
+                        }
+                    })
+                }
             }
+            
 
             const newBlock = await prisma.block.findMany({
                 include: {
@@ -79,10 +82,10 @@ export const create = async (data) => {
                 }
             });
 
-            return createBlockListItem(newBlock);
+            return createBlockListItem(newBlock[0]);
         }
         else {
-            return `<p>Missing data</p>`;
+            return `<p>Por favor llenar todo el formulario antes de enviar</p>`;
         }
     } catch (error) {
         console.log(error)
