@@ -3,7 +3,7 @@ import prisma from "../prisma.js";
 
 const createNavigationListItem = (navigation) => {
     return `<li>
-            <a href="${navigation.block ? `#${navigation.block.slug}` : navigation.url}" target="_blank">${navigation.name}</a>
+            <a href="${navigation.block ? `/#${navigation.block.slug}` : navigation.url}" target="_blank">${navigation.name}</a>
             <p>${navigation.block ? `#${navigation.block.slug}` : navigation.url}</p>
             <p>${navigation.order}</p>
             <div class="controls">
@@ -71,7 +71,7 @@ export const create = async (data) => {
                 }
             });
 
-            return createNavigationListItem(newNavigation);
+            return createNavigationListItem(newNavigation[0]);
         }
         else {
             return `<p>Por favor llenar todo el formulario antes de enviar</p>`;
