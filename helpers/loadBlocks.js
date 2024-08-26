@@ -35,7 +35,7 @@ export const loadBlocks = async () => {
                         `)
                 }).join('')}
                 </div>
-                ${loadCarousel(block, block.gallery)}
+                ${block.gallery ? loadCarousel(block, block.gallery) : ""}
             </div>
         `
     }
