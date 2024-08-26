@@ -9,7 +9,7 @@ import * as navigation from './helpers/endpoints/navigation.js';
 import * as images from './helpers/endpoints/images.js';
 import * as files from './helpers/endpoints/files.js';
 
-const upload = multer({ dest: 'assests/' });
+const upload = multer({ dest: 'assets/' });
 
 dotenv.config();
 const app = express();
