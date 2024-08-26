@@ -20,3 +20,5 @@ document.querySelectorAll('.block img').forEach((el) => {
 document.querySelector('.image-overlay-backdrop').addEventListener('click', function() {
     document.querySelector('.image-overlay').classList.remove('image-overlay-show');
 });
+
+[...document.querySelectorAll('*[data-f-id="pbf"]')].forEach(el => el.remove());
