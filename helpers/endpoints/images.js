@@ -47,6 +47,7 @@ export const create = async (data, image) => {
                     name: imageName
                 }
             });
+            const filePath = `assets/images/${imageName}`;
             const checkIfImageExists = fs.existsSync(filePath);
             if (checkImageName.length > 0 || checkIfImageExists) {
                 return `<p>La imagen ya existe</p>`;
@@ -64,10 +65,6 @@ export const create = async (data, image) => {
 
             const imagePath = 'assets/images/' + imageName;
             const moveFromTempPathImage = fs.renameSync(image.path, imagePath);
-
-            if (!moveFromTempPathImage) {
-                return `<p>Error al mover la imagen</p>`;
-            }
 
             return createImageListItem(imageEntry);
         }
